@@ -320,6 +320,7 @@ cpdefine("inline:com-chilipeppr-widget-CNCVoiceControl", ["chilipeppr_ready", /*
             // Init Hello World 2 button on Tab 1. Notice the use
             // of the slick .bind(this) technique to correctly set "this"
             // when the callback is called
+            $('#' + this.id + ' .btn-voiceOn').click(this.voiceOnBtnClick.bind(this));
             $('#' + this.id + ' .btn-spindleOn-CW').click(this.spindleOnCwBtnClick.bind(this));
             $('#' + this.id + ' .btn-spindleOn-CCW').click(this.spindleOnCcwBtnClick.bind(this));
             $('#' + this.id + ' .btn-spindleOff').click(this.spindleOffBtnClick.bind(this));
@@ -330,6 +331,59 @@ cpdefine("inline:com-chilipeppr-widget-CNCVoiceControl", ["chilipeppr_ready", /*
         /**
          * onHelloBtnClick is an example of a button click event callback
          */
+         
+                   
+        voiceOnBtnClick: function(evt) {
+            var recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
+            recognition.lang = 'en-US';
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 5;
+            recognition.start();
+            [
+             'onaudiostart',
+             'onaudioend',
+             'onend',
+             'onerror',
+             'onnomatch',
+             'onresult',
+             'onsoundstart',
+             'onsoundend',
+             'onspeechend',
+             'onstart'
+              ].forEach(function(eventName) {
+                recognition[eventName] = function(e) {
+                chilipeppr.publish('/com-chilipeppr-elem-flashmsg/flashmsg',    
+                    'You : ',eventName, e, 3000
+                    );
+                    };
+                });
+                
+            
+                 recognition.onresult = function(event) { 
+                    chilipeppr.publish( 
+                    '/com-chilipeppr-elem-flashmsg/flashmsg',    
+                    'You said: ', event.results[0][0].transcript,
+                    3000)
+                     
+                 };
+                
+               var txtOutput = "Yay1";
+               //var txtBox = document.getElementById("txtOutput").value;
+               document.getElementsByName('output')[0].value= txtOutput;
+               
+               
+               
+             /*
+                 chilipeppr.publish(
+                    '/com-chilipeppr-elem-flashmsg/flashmsg',
+                    "Voice Control Acticve",
+                    "......",
+                    //+ jsonSend + this.id, 
+                    3000 /* show for 2 second */
+           // ); 
+        },
+         
+         
           sendCtr: 0,
         spindleOnCwBtnClick: function(evt) {
             var gcode = "M3 ";
@@ -645,14 +699,13 @@ cpdefine("inline:com-chilipeppr-widget-CNCVoiceControl", ["chilipeppr_ready", /*
                         <ul class="dropdown-menu dropdown-menu-right" role="menu"></ul>
                     </div>
                 </div>
-            </div> <span class="panel-title" data-toggle="popover">Spindle Control Widget</span> <span style="font-size:9px;" class="fb-build">v1</span>
+            </div> <span class="panel-title" data-toggle="popover">Voice Control Widget</span> <span style="font-size:9px;" class="fb-build">v1</span>
 
         </div>
         <div class="panel-body">
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
-                <li class="active"><a href="#com-chilipeppr-widget-CNCVoiceControl-tab1" role="tab" data-toggle="tab">Control</a>
-                </li>
+                <li class="active"><a href="#com-chilipeppr-widget-CNCVoiceControl-tab1" role="tab" data-toggle="tab">Control</a></li>
                 <li><a href="#com-chilipeppr-widget-CNCVoiceControl-tab2" role="tab" data-toggle="tab">Speeds & Feeds</a></li>
                 <li><a href="#com-chilipeppr-widget-CNCVoiceControl-tab3" role="tab" data-toggle="tab">Settings</a></li>
             </ul>
@@ -663,6 +716,10 @@ cpdefine("inline:com-chilipeppr-widget-CNCVoiceControl", ["chilipeppr_ready", /*
                 <!-- Tab 1 -->
                 <div class="tab-pane active" id="com-chilipeppr-widget-CNCVoiceControl-tab1">
                     <div id="slidecontainer">
+                       <button type="button" class="btn btn-xs btn-default btn-voiceOn">Voice Control On</button><button type="button" class="btn btn-xs btn-default btn-voiceOff">Voice Control Off</button>
+                      
+                       <label for="output">You said: </label><input id="txtOutput" type="textbox" name="output"></input>
+                       
                         <div id="speedRO">Speed: <span id="demo"></span> rpm </div>
                           <input type="range" min="5000" max="24000" value="8000" step="100" class="slider" id="myRange">
                             <table>

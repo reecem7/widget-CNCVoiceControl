@@ -208,6 +208,7 @@ cpdefine("inline:com-chilipeppr-widget-CNCVoiceControl", ["chilipeppr_ready", /*
             // Init Hello World 2 button on Tab 1. Notice the use
             // of the slick .bind(this) technique to correctly set "this"
             // when the callback is called
+            $('#' + this.id + ' .btn-voiceOn').click(this.voiceOnBtnClick.bind(this));
             $('#' + this.id + ' .btn-spindleOn-CW').click(this.spindleOnCwBtnClick.bind(this));
             $('#' + this.id + ' .btn-spindleOn-CCW').click(this.spindleOnCcwBtnClick.bind(this));
             $('#' + this.id + ' .btn-spindleOff').click(this.spindleOffBtnClick.bind(this));
@@ -218,6 +219,59 @@ cpdefine("inline:com-chilipeppr-widget-CNCVoiceControl", ["chilipeppr_ready", /*
         /**
          * onHelloBtnClick is an example of a button click event callback
          */
+         
+                   
+        voiceOnBtnClick: function(evt) {
+            var recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
+            recognition.lang = 'en-US';
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 5;
+            recognition.start();
+            [
+             'onaudiostart',
+             'onaudioend',
+             'onend',
+             'onerror',
+             'onnomatch',
+             'onresult',
+             'onsoundstart',
+             'onsoundend',
+             'onspeechend',
+             'onstart'
+              ].forEach(function(eventName) {
+                recognition[eventName] = function(e) {
+                chilipeppr.publish('/com-chilipeppr-elem-flashmsg/flashmsg',    
+                    'You : ',eventName, e, 3000
+                    );
+                    };
+                });
+                
+            
+                 recognition.onresult = function(event) { 
+                    chilipeppr.publish( 
+                    '/com-chilipeppr-elem-flashmsg/flashmsg',    
+                    'You said: ', event.results[0][0].transcript,
+                    3000)
+                     
+                 };
+                
+               var txtOutput = "Yay1";
+               //var txtBox = document.getElementById("txtOutput").value;
+               document.getElementsByName('output')[0].value= txtOutput;
+               
+               
+               
+             /*
+                 chilipeppr.publish(
+                    '/com-chilipeppr-elem-flashmsg/flashmsg',
+                    "Voice Control Acticve",
+                    "......",
+                    //+ jsonSend + this.id, 
+                    3000 /* show for 2 second */
+           // ); 
+        },
+         
+         
           sendCtr: 0,
         spindleOnCwBtnClick: function(evt) {
             var gcode = "M3 ";
