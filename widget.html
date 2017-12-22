@@ -68,10 +68,6 @@
                 <!-- Tab 1 -->
                 <div class="tab-pane active" id="com-chilipeppr-widget-CNCVoiceControl-tab1">
                     <div id="slidecontainer">
-                       <button type="button" class="btn btn-xs btn-default btn-voiceOn">Voice Control On</button><button type="button" class="btn btn-xs btn-default btn-voiceOff">Voice Control Off</button>
-                      
-                       <label for="output">You said: </label><input id="txtOutput" type="textbox" name="output"></input>
-                       
                         <div id="speedRO">Speed: <span id="demo"></span> rpm </div>
                           <input type="range" min="5000" max="24000" value="8000" step="100" class="slider" id="myRange">
                             <table>
@@ -84,6 +80,13 @@
                                 </tr>
                             </table>
                     </div>
+                    <div class="textlog-body" >
+                          <button type="button" class="btn btn-xs btn-default btn-voiceOn">Voice Control On</button><button type="button" class="btn btn-xs btn-default btn-voiceOff">Voice Control Off</button>
+                          <br><label for="output">You said: </label>
+                          <div id="textlog-console">vfffvfv
+                              <pre></pre>
+                            </div>
+                     </div>
                 </div>
                 <!-- Tab 2 -->
                 <div class="tab-pane" id="com-chilipeppr-widget-CNCVoiceControl-tab2">

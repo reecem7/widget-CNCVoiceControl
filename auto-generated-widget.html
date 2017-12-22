@@ -106,6 +106,22 @@ ul {
     padding-top: 0px
 }
 
+.textlog-body{
+    margin-top: 10px;
+    padding-top: 10px
+
+}
+
+#textlog-console{
+    width: 100%;
+    height: 60px;
+      overflow-x: hidden; /* Hide horizontal scrollbar */
+    overflow-y: scroll;
+     color: black;
+    background-color:lightgrey;
+}
+
+
     </style>
 
     <script type='text/javascript'>
@@ -339,7 +355,7 @@ cpdefine("inline:com-chilipeppr-widget-CNCVoiceControl", ["chilipeppr_ready", /*
             recognition.interimResults = false;
             recognition.maxAlternatives = 5;
             recognition.start();
-            [
+         /*  [
              'onaudiostart',
              'onaudioend',
              'onend',
@@ -357,19 +373,24 @@ cpdefine("inline:com-chilipeppr-widget-CNCVoiceControl", ["chilipeppr_ready", /*
                     );
                     };
                 });
-                
-            
-                 recognition.onresult = function(event) { 
-                    chilipeppr.publish( 
-                    '/com-chilipeppr-elem-flashmsg/flashmsg',    
-                    'You said: ', event.results[0][0].transcript,
-                    3000)
-                     
+                */
+                      recognition.onresult = function(event) { 
+                          document.getElementById('textlog-console').value = event.results[0][0].transcript;
+                            chilipeppr.publish( 
+                            '/com-chilipeppr-elem-flashmsg/flashmsg',    
+                            'You said: ', event.results[0][0].transcript,
+                            3000);
+                    
                  };
+                
+               
+           chilipeppr.publish('/com-chilipeppr-elem-flashmsg/flashmsg','poop','...', 2000 );  //how to log to screen
+            chilipeppr.publish('/com-chilipeppr-elem-flashmsg/flashmsg','soup','...', 2000 );      
+           
                 
                var txtOutput = "Yay1";
                //var txtBox = document.getElementById("txtOutput").value;
-               document.getElementsByName('output')[0].value= txtOutput;
+               //document.getElementsByName('output')[0].value= txtOutput;
                
                
                
@@ -716,10 +737,6 @@ cpdefine("inline:com-chilipeppr-widget-CNCVoiceControl", ["chilipeppr_ready", /*
                 <!-- Tab 1 -->
                 <div class="tab-pane active" id="com-chilipeppr-widget-CNCVoiceControl-tab1">
                     <div id="slidecontainer">
-                       <button type="button" class="btn btn-xs btn-default btn-voiceOn">Voice Control On</button><button type="button" class="btn btn-xs btn-default btn-voiceOff">Voice Control Off</button>
-                      
-                       <label for="output">You said: </label><input id="txtOutput" type="textbox" name="output"></input>
-                       
                         <div id="speedRO">Speed: <span id="demo"></span> rpm </div>
                           <input type="range" min="5000" max="24000" value="8000" step="100" class="slider" id="myRange">
                             <table>
@@ -732,6 +749,13 @@ cpdefine("inline:com-chilipeppr-widget-CNCVoiceControl", ["chilipeppr_ready", /*
                                 </tr>
                             </table>
                     </div>
+                    <div class="textlog-body" >
+                          <button type="button" class="btn btn-xs btn-default btn-voiceOn">Voice Control On</button><button type="button" class="btn btn-xs btn-default btn-voiceOff">Voice Control Off</button>
+                          <br><label for="output">You said: </label>
+                          <div id="textlog-console">vfffvfv
+                              <pre></pre>
+                            </div>
+                     </div>
                 </div>
                 <!-- Tab 2 -->
                 <div class="tab-pane" id="com-chilipeppr-widget-CNCVoiceControl-tab2">

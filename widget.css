@@ -89,3 +89,19 @@ p {
 ul {
     padding-top: 0px
 }
+
+.textlog-body{
+    margin-top: 10px;
+    padding-top: 10px
+
+}
+
+#textlog-console{
+    width: 100%;
+    height: 60px;
+      overflow-x: hidden; /* Hide horizontal scrollbar */
+    overflow-y: scroll;
+     color: black;
+    background-color:lightgrey;
+}
+

@@ -227,7 +227,7 @@ cpdefine("inline:com-chilipeppr-widget-CNCVoiceControl", ["chilipeppr_ready", /*
             recognition.interimResults = false;
             recognition.maxAlternatives = 5;
             recognition.start();
-            [
+         /*  [
              'onaudiostart',
              'onaudioend',
              'onend',
@@ -245,19 +245,24 @@ cpdefine("inline:com-chilipeppr-widget-CNCVoiceControl", ["chilipeppr_ready", /*
                     );
                     };
                 });
-                
-            
-                 recognition.onresult = function(event) { 
-                    chilipeppr.publish( 
-                    '/com-chilipeppr-elem-flashmsg/flashmsg',    
-                    'You said: ', event.results[0][0].transcript,
-                    3000)
-                     
+                */
+                      recognition.onresult = function(event) { 
+                          document.getElementById('textlog-console').value = event.results[0][0].transcript;
+                            chilipeppr.publish( 
+                            '/com-chilipeppr-elem-flashmsg/flashmsg',    
+                            'You said: ', event.results[0][0].transcript,
+                            3000);
+                    
                  };
+                
+               
+           chilipeppr.publish('/com-chilipeppr-elem-flashmsg/flashmsg','poop','...', 2000 );  //how to log to screen
+            chilipeppr.publish('/com-chilipeppr-elem-flashmsg/flashmsg','soup','...', 2000 );      
+           
                 
                var txtOutput = "Yay1";
                //var txtBox = document.getElementById("txtOutput").value;
-               document.getElementsByName('output')[0].value= txtOutput;
+               //document.getElementsByName('output')[0].value= txtOutput;
                
                
                
