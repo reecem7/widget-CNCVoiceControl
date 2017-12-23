@@ -92,16 +92,42 @@ ul {
 
 .textlog-body{
     margin-top: 10px;
-    padding-top: 10px
+    padding-top: 10px;
 
 }
 
-#textlog-console{
+#text {
     width: 100%;
-    height: 60px;
-      overflow-x: hidden; /* Hide horizontal scrollbar */
-    overflow-y: scroll;
-     color: black;
-    background-color:lightgrey;
+    height: 70px;
+    color: black;
+    background-color: lightgrey;
+    overflow-x: auto;
+    overflow-y: auto; /* Hide horizontal scrollbar */
+    margin-top: 0px;
+     
+  
+}
+#textCommand {
+    width: 100%;
+    height: 70px;
+    color: black;
+    background-color: lightgrey;
+    overflow-x: auto;
+    overflow-y: auto; /* Hide horizontal scrollbar */
+    margin-top: 0px;
+     
+  
+}
+#textEvents {
+       width: 100%;
+    height: 100px;
+    color: blue;
+    background-color: lightgrey;
+    overflow-x: auto;
+    overflow-y: auto; /* Hide horizontal scrollbar */
+    margin-top: 0px;
 }
 
+.danger{
+    background-color: red;
+}

@@ -209,6 +209,7 @@ cpdefine("inline:com-chilipeppr-widget-CNCVoiceControl", ["chilipeppr_ready", /*
             // of the slick .bind(this) technique to correctly set "this"
             // when the callback is called
             $('#' + this.id + ' .btn-voiceOn').click(this.voiceOnBtnClick.bind(this));
+            $('#' + this.id + ' .btn-voiceOff').click(this.voiceOffBtnClick.bind(this));
             $('#' + this.id + ' .btn-spindleOn-CW').click(this.spindleOnCwBtnClick.bind(this));
             $('#' + this.id + ' .btn-spindleOn-CCW').click(this.spindleOnCcwBtnClick.bind(this));
             $('#' + this.id + ' .btn-spindleOff').click(this.spindleOffBtnClick.bind(this));
@@ -222,12 +223,28 @@ cpdefine("inline:com-chilipeppr-widget-CNCVoiceControl", ["chilipeppr_ready", /*
          
                    
         voiceOnBtnClick: function(evt) {
+            //turn On button to red
+            $('#' + this.id + ' .btn-voiceOn').addClass('danger');
             var recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
+           // var grammar = '#JSGF V1.0; grammar colors; public <color> = blue | red | black ... ;';
+           // var recognition = new window.webkitSpeechRecognition();
+           // var speechRecognitionList = new window.webkitSpeechGrammarList();
+           // speechRecognitionList.addFromString(grammar, 1);
+           // recognition.grammars = speechRecognitionList;
+         
+            
             recognition.lang = 'en-US';
-            recognition.interimResults = false;
-            recognition.maxAlternatives = 5;
+            //recognition.continuous = false; //default is false
+            recognition.interimResults = false; //default is false
+            recognition.maxAlternatives = 1;
+            var i = 0;
+            
+            while(i === 0){
+                
             recognition.start();
-         /*  [
+            var txtEvents = document.getElementById('textEvents');
+            var eventArray = [];
+            [
              'onaudiostart',
              'onaudioend',
              'onend',
@@ -240,32 +257,50 @@ cpdefine("inline:com-chilipeppr-widget-CNCVoiceControl", ["chilipeppr_ready", /*
              'onstart'
               ].forEach(function(eventName) {
                 recognition[eventName] = function(e) {
-                chilipeppr.publish('/com-chilipeppr-elem-flashmsg/flashmsg',    
-                    'You : ',eventName, e, 3000
-                    );
+                  // txtEvents.innerHTML = eventName, e; 
+                    eventArray.push( eventName + "<br>");
+                    txtEvents.innerHTML = eventArray.join('\r\n');
                     };
-                });
-                */
-                      recognition.onresult = function(event) { 
-                          document.getElementById('textlog-console').value = event.results[0][0].transcript;
-                            chilipeppr.publish( 
+                    
+                }
+                );
+              
+                    var txt = document.getElementById('text');
+                    var txtCmd = document.getElementById('textCommand');
+                    recognition.onresult = function(event) { 
+                     
+                         txt.innerHTML = event.results[0][0].transcript;
+                         var textCheck = txt.innerHTML;
+                         
+                        if(textCheck==="Texas" ){
+                            
+                                 txtCmd.innerHTML = "Command: Jogging X-Axis 1mm";
+                                 var gcode = "G91 G0 X1";
+                                gcode += "\nG90\n";
+                                chilipeppr.publish("/com-chilipeppr-widget-serialport/send", gcode); 
+                                 i = 1;
+                                
+                        } else {
+                            txtCmd.innerHTML = "No Match";
+                            recognition.start();
+                            
+                        }
+                         
+                    };
+            }
+                        
+                         chilipeppr.publish( 
                             '/com-chilipeppr-elem-flashmsg/flashmsg',    
                             'You said: ', event.results[0][0].transcript,
-                            3000);
+                            3000);  
+                
                     
-                 };
+                // document.getElementsByName('output')[0].value = event.results[0][0].transcript; 
                 
-               
-           chilipeppr.publish('/com-chilipeppr-elem-flashmsg/flashmsg','poop','...', 2000 );  //how to log to screen
-            chilipeppr.publish('/com-chilipeppr-elem-flashmsg/flashmsg','soup','...', 2000 );      
-           
-                
-               var txtOutput = "Yay1";
-               //var txtBox = document.getElementById("txtOutput").value;
-               //document.getElementsByName('output')[0].value= txtOutput;
-               
-               
-               
+              //var txtOutput = "Yay1 I cant wait to hand with my friends and see what they are doing for the holidays and af";
+              //var txt = document.getElementById('text');
+              //txt.innerHTML = txtOutput;
+              // document.getElementsByName('textlog-console')[0].value= txtOutput;
              /*
                  chilipeppr.publish(
                     '/com-chilipeppr-elem-flashmsg/flashmsg',
@@ -275,6 +310,14 @@ cpdefine("inline:com-chilipeppr-widget-CNCVoiceControl", ["chilipeppr_ready", /*
                     3000 /* show for 2 second */
            // ); 
         },
+        
+        
+          voiceOffBtnClick: function(evt) {
+            //remove red from On Button
+            $('#' + this.id + ' .btn-voiceOn').removeClass('danger');
+            this.Recognition.stop();
+        },
+         
          
          
           sendCtr: 0,
