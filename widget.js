@@ -239,7 +239,7 @@ cpdefine("inline:com-chilipeppr-widget-CNCVoiceControl", ["chilipeppr_ready", /*
             recognition.maxAlternatives = 1;
             var i = 0;
             
-            while(i === 0){
+           
                 
             recognition.start();
             var txtEvents = document.getElementById('textEvents');
@@ -287,7 +287,7 @@ cpdefine("inline:com-chilipeppr-widget-CNCVoiceControl", ["chilipeppr_ready", /*
                         }
                          
                     };
-            }
+            
                         
                          chilipeppr.publish( 
                             '/com-chilipeppr-elem-flashmsg/flashmsg',    
