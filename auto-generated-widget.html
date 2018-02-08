@@ -286,7 +286,6 @@ cpdefine("inline:com-chilipeppr-widget-CNCVoiceControl", ["chilipeppr_ready", /*
          */
         init: function() {
             console.log("I am being initted. Thanks.");
-            this.sliderSetup();
             this.setupUiFromLocalStorage();
             this.btnSetup();
             this.forkSetup();
@@ -299,21 +298,6 @@ cpdefine("inline:com-chilipeppr-widget-CNCVoiceControl", ["chilipeppr_ready", /*
          * buttons. It also turns on all the bootstrap popovers by scanning
          * the entire DOM of the widget.
          */
-         
-        //RPM slider selector setup
-        sliderSetup: function() {
-            var slider = document.getElementById("myRange");
-            var output = document.getElementById("demo");
-            output.innerHTML = slider.value;
-          
-            slider.oninput = function() {
-            output.innerHTML = this.value;
-            }
-            var curSpeed = 0;
-            document.getElementById("demo2").innerHTML = curSpeed;
-        },
-        
-  
          
         btnSetup: function() {
 
@@ -358,6 +342,8 @@ cpdefine("inline:com-chilipeppr-widget-CNCVoiceControl", ["chilipeppr_ready", /*
                     1000
                 );
             });
+            
+            
 
             // Init Hello World 2 button on Tab 1. Notice the use
             // of the slick .bind(this) technique to correctly set "this"
@@ -370,6 +356,8 @@ cpdefine("inline:com-chilipeppr-widget-CNCVoiceControl", ["chilipeppr_ready", /*
             $('#' + this.id + ' .btn-spindleMin').click(this.minSpeedBtnClick.bind(this));
             $('#' + this.id + ' .btn-spindleMax').click(this.maxSpeedBtnClick.bind(this));
             */
+            
+            
         },
         /**
          * onHelloBtnClick is an example of a button click event callback
@@ -428,7 +416,7 @@ cpdefine("inline:com-chilipeppr-widget-CNCVoiceControl", ["chilipeppr_ready", /*
                          
                         if(textCheck==="Texas" ){
                             
-                                 txtCmd.innerHTML = "Command: Jogging X-Axis 1mm";
+                                 txtCmd.innerHTML = "Jogging X-Axis 1mm";
                                  var gcode = "G91 G0 X1";
                                 gcode += "\nG90\n";
                                 chilipeppr.publish("/com-chilipeppr-widget-serialport/send", gcode); 
@@ -442,12 +430,12 @@ cpdefine("inline:com-chilipeppr-widget-CNCVoiceControl", ["chilipeppr_ready", /*
                          
                     };
             
-                        
+                        /*
                          chilipeppr.publish( 
                             '/com-chilipeppr-elem-flashmsg/flashmsg',    
                             'You said: ', event.results[0][0].transcript,
                             3000);  
-                
+                        */
                     
                 // document.getElementsByName('output')[0].value = event.results[0][0].transcript; 
                 
@@ -455,75 +443,21 @@ cpdefine("inline:com-chilipeppr-widget-CNCVoiceControl", ["chilipeppr_ready", /*
               //var txt = document.getElementById('text');
               //txt.innerHTML = txtOutput;
               // document.getElementsByName('textlog-console')[0].value= txtOutput;
-             /*
+             
                  chilipeppr.publish(
                     '/com-chilipeppr-elem-flashmsg/flashmsg',
                     "Voice Control Acticve",
                     "......",
-                    //+ jsonSend + this.id, 
-                    3000 /* show for 2 second */
-           // ); 
+                    3000 ); 
         },
         
         
           voiceOffBtnClick: function(evt) {
             //remove red from On Button
-            $('#' + this.id + ' .btn-voiceOn').removeClass('danger');
-            this.Recognition.stop();
+           $('#' + this.id + ' .btn-voiceOn').removeClass('danger');
+           // this.Recognition.stop();
         },
          
-         
-         
-          sendCtr: 0,
-        spindleOnCwBtnClick: function(evt) {
-            var gcode = "M3 ";
-            var speed = document.getElementById('myRange').value; //the slider value is assigned to the speed variable
-            gcode += "S" + speed;
-            //gcode += "\nG90\n"; not needed
-            var curSpeed = document.getElementById("demo2");
-            // Set current speed to the last speed sent to board
-                curSpeed.innerHTML = speed;
-            // allows you to move slider to select new speed without forgetting what current spindle speed is
-            speed.oninput = function() {
-            curSpeed.innerHTML = this.value;
-            }
-            chilipeppr.publish("/com-chilipeppr-widget-serialport/send", gcode);       
-            /*var jsonSend = {
-                D: gcode,
-                Id: "jog" + this.sendCtr
-            };
-                chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", jsonSend);
-                 this.sendCtr++;
-                 if (this.sendCtr > 999999) this.sendCtr = 0;
-                 */
-           // console.log("Spindle on at ----");
-            chilipeppr.publish(
-                '/com-chilipeppr-elem-flashmsg/flashmsg',
-                "Spindle On: Clockwise",
-                "Speed set to: " + speed + " rpm",
-                //+ jsonSend + this.id, 
-                3000 /* show for 2 second */
-            );
-        },
-        
-       
-  
-        /*
-        //added below
-        sendCtr: 0,
-        sendMove: function (touchid, prevpos, newpos) {
-            var gcode = "G91 G0 X1";
-            gcode += "\nG90\n";
-            //chilipeppr.publish("/com-chilipeppr-widget-serialport/send", gcode);          
-            var jsonSend = {
-                D: gcode,
-                Id: "jog" + this.sendCtr
-            };
-            chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", jsonSend);
-            this.sendCtr++;
-            if (this.sendCtr > 999999) this.sendCtr = 0;
-        },
-        //added above
         
         /**
          * User options are available in this property for reference by your
