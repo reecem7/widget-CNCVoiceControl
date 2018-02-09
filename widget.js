@@ -195,6 +195,8 @@ cpdefine("inline:com-chilipeppr-widget-CNCVoiceControl", ["chilipeppr_ready", /*
             // of the slick .bind(this) technique to correctly set "this"
             // when the callback is called
             $('#' + this.id + ' .btn-voiceOn').click(this.voiceOnBtnClick.bind(this));
+            $('#' + this.id + ' .btn-voiceOn2').click(this.voiceOnBtnClick2.bind(this));
+            //$('#' + this.id + ' .btn-voiceOn3').click(this.voiceOnBtnClick3.bind(this));
             $('#' + this.id + ' .btn-voiceOff').click(this.voiceOffBtnClick.bind(this));
             /*$('#' + this.id + ' .btn-spindleOn-CW').click(this.spindleOnCwBtnClick.bind(this));
             $('#' + this.id + ' .btn-spindleOn-CCW').click(this.spindleOnCcwBtnClick.bind(this));
@@ -209,6 +211,29 @@ cpdefine("inline:com-chilipeppr-widget-CNCVoiceControl", ["chilipeppr_ready", /*
          * onHelloBtnClick is an example of a button click event callback
          */
          
+         
+     
+        
+         voiceOnBtnClick2: function(evt) {
+        /*
+            // if (annyang) {
+            // Let's define a command.
+            var commands = {
+            'hello': function() { alert('Hello world!'); }
+            };
+        
+              // Add our commands to annyang
+              annyang.addCommands(commands);
+            
+              // Start listening.
+              annyang.start();
+          //  }
+              
+        
+            chilipeppr.publish('/com-chilipeppr-elem-flashmsg/flashmsg', "Voice Control Acticve", "......", 3000 ); 
+            */
+        },
+        
                    
         voiceOnBtnClick: function(evt) {
             //turn On button to red

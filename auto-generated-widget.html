@@ -349,6 +349,8 @@ cpdefine("inline:com-chilipeppr-widget-CNCVoiceControl", ["chilipeppr_ready", /*
             // of the slick .bind(this) technique to correctly set "this"
             // when the callback is called
             $('#' + this.id + ' .btn-voiceOn').click(this.voiceOnBtnClick.bind(this));
+            $('#' + this.id + ' .btn-voiceOn2').click(this.voiceOnBtnClick2.bind(this));
+            //$('#' + this.id + ' .btn-voiceOn3').click(this.voiceOnBtnClick3.bind(this));
             $('#' + this.id + ' .btn-voiceOff').click(this.voiceOffBtnClick.bind(this));
             /*$('#' + this.id + ' .btn-spindleOn-CW').click(this.spindleOnCwBtnClick.bind(this));
             $('#' + this.id + ' .btn-spindleOn-CCW').click(this.spindleOnCcwBtnClick.bind(this));
@@ -363,6 +365,29 @@ cpdefine("inline:com-chilipeppr-widget-CNCVoiceControl", ["chilipeppr_ready", /*
          * onHelloBtnClick is an example of a button click event callback
          */
          
+         
+     
+        
+         voiceOnBtnClick2: function(evt) {
+        /*
+            // if (annyang) {
+            // Let's define a command.
+            var commands = {
+            'hello': function() { alert('Hello world!'); }
+            };
+        
+              // Add our commands to annyang
+              annyang.addCommands(commands);
+            
+              // Start listening.
+              annyang.start();
+          //  }
+              
+        
+            chilipeppr.publish('/com-chilipeppr-elem-flashmsg/flashmsg', "Voice Control Acticve", "......", 3000 ); 
+            */
+        },
+        
                    
         voiceOnBtnClick: function(evt) {
             //turn On button to red
@@ -610,7 +635,8 @@ cpdefine("inline:com-chilipeppr-widget-CNCVoiceControl", ["chilipeppr_ready", /*
            
     //]]>
     </script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.6.0/annyang.min.js"></script>
+    
+   <!-- <script type='text/javascript' src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.6.0/annyang.min.js"></script> -->
 
 </head>
 
@@ -664,7 +690,23 @@ cpdefine("inline:com-chilipeppr-widget-CNCVoiceControl", ["chilipeppr_ready", /*
                             </table>
                     </div> -->
                     <div class="textlog-body" >
-                          <button type="button" class="btn btn-xs btn-default btn-voiceOn">Voice Control On</button><button type="button" class="btn btn-xs btn-default btn-voiceOff">Voice Control Off</button>
+                        <table>
+                            <th>Webkit</th>    
+                          <tr>
+                              <td><button type="button" class="btn btn-xs btn-default btn-voiceOn">Voice Control On</button></td>
+                              <td><button type="button" class="btn btn-xs btn-default btn-voiceOff">Voice Control Off</button></td> 
+                          </tr>
+                          <th>Annyang</th>
+                          <tr>
+                          <td><button type="button" class="btn btn-xs btn-default btn-voiceOn2">Voice Control On</button></td>
+                          <td><button type="button" class="btn btn-xs btn-default btn-voiceOff2">Voice Control Off</button></td>
+                          </tr>
+                          <th>Watson</th>
+                          <tr>
+                            <td><button type="button" class="btn btn-xs btn-default btn-voiceOn3">Voice Control On</button></td>
+                            <td><button type="button" class="btn btn-xs btn-default btn-voiceOff3">Voice Control Off</button></td>
+                         </tr>
+                        </table>
                           <!--<br><label for="output">You said: </label><input type="textbox" name="output"></input>-->
                           <br><span>You said: </span>
                           <div id= "text">... <span></span> . </div>
@@ -701,5 +743,24 @@ cpdefine("inline:com-chilipeppr-widget-CNCVoiceControl", ["chilipeppr_ready", /*
     }
 </script>
     -->
+<!--
+<script>
+if (annyang) {
+  // Let's define a command.
+  var commands = {
+    'hello': function() { alert('Hello world!');},
+    
+    'hey': function() { chilipeppr.publish('/com-chilipeppr-elem-flashmsg/flashmsg', "Voice Control Acticve", "......", 3000 ); }
+
+  };
+
+  // Add our commands to annyang
+  annyang.addCommands(commands);
+
+  // Start listening.
+  annyang.start();
+}
+</script>
+-->
 </body>
 </html>
