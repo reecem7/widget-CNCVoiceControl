@@ -195,7 +195,7 @@ cpdefine("inline:com-chilipeppr-widget-CNCVoiceControl", ["chilipeppr_ready", /*
             // of the slick .bind(this) technique to correctly set "this"
             // when the callback is called
             $('#' + this.id + ' .btn-voiceOn').click(this.voiceOnBtnClick.bind(this));
-            $('#' + this.id + ' .btn-voiceOn2').click(this.voiceOnBtnClick2.bind(this));
+            //$('#' + this.id + ' .btn-voiceOn2').click(this.voiceOnBtnClick2.bind(this));
             //$('#' + this.id + ' .btn-voiceOn3').click(this.voiceOnBtnClick3.bind(this));
             $('#' + this.id + ' .btn-voiceOff').click(this.voiceOffBtnClick.bind(this));
             /*$('#' + this.id + ' .btn-spindleOn-CW').click(this.spindleOnCwBtnClick.bind(this));
