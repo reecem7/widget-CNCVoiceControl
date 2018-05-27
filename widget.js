@@ -214,7 +214,7 @@ cpdefine("inline:com-chilipeppr-widget-CNCVoiceControl", ["chilipeppr_ready", /*
          
      
         
-         voiceOnBtnClick2: function(evt) {
+       //  voiceOnBtnClick2: function(evt) {
         /*
             // if (annyang) {
             // Let's define a command.
@@ -232,7 +232,7 @@ cpdefine("inline:com-chilipeppr-widget-CNCVoiceControl", ["chilipeppr_ready", /*
         
             chilipeppr.publish('/com-chilipeppr-elem-flashmsg/flashmsg', "Voice Control Acticve", "......", 3000 ); 
             */
-        },
+       // },
         
                    
         voiceOnBtnClick: function(evt) {
