@@ -287,11 +287,19 @@ cpdefine("inline:com-chilipeppr-widget-CNCVoiceControl", ["chilipeppr_ready", /*
                          
                         if(textCheck==="Texas" ){
                             
-                                 txtCmd.innerHTML = "Jogging X-Axis 1mm";
-                                 var gcode = "G91 G0 X1";
-                                gcode += "\nG90\n";
+                                 txtCmd.innerHTML = "Voice Control!: Homing Machine";
+                                 var gcode = "G53 G1 X0 Y0 Z0 F1000";
+                                // gcode += "\nG90\n";
                                 chilipeppr.publish("/com-chilipeppr-widget-serialport/send", gcode); 
                                  i = 1;
+                                
+                              chilipeppr.publish(
+                                '/com-chilipeppr-elem-flashmsg/flashmsg',
+                                "AutoToolChange" , "Homing Machine" 
+                                  ,
+                                2000 /* show for 2 second */
+                            );
+                                                
                                 
                         } else {
                             txtCmd.innerHTML = "No Match";
